@@ -8,9 +8,17 @@ const chart = new Chart(ctx, {
   data: {
     labels: labels,
     datasets: [{
-      label: 'Temperature',
-      data: data
+      label: 'Temperature (°C)',
+      data: data,
+      borderWidth: 2
     }]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: false
+      }
+    }
   }
 });
 
@@ -21,6 +29,16 @@ function generateData() {
   document.getElementById("temp").innerText = temp + " °C";
   document.getElementById("hum").innerText = humidity + " %";
 
+  // Update time
+  document.getElementById("time").innerText =
+    "Last updated: " + new Date().toLocaleTimeString();
+
+  // Alert feature
+  if (temp > 32) {
+    alert("⚠️ High Temperature Warning!");
+  }
+
+  // Maintain last 10 data points
   if (labels.length > 10) {
     labels.shift();
     data.shift();
@@ -32,4 +50,5 @@ function generateData() {
   chart.update();
 }
 
+// Run every 2 seconds
 setInterval(generateData, 2000);
