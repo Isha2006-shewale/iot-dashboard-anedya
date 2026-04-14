@@ -35,7 +35,6 @@ function generateData() {
 
   let alertBox = document.getElementById("alertBox");
 
-  // Alert logic (NO SPAM)
   if (temp > 32) {
     alertBox.innerText = "⚠️ High Temperature Warning!";
     alertBox.className = "alert";
@@ -50,7 +49,6 @@ function generateData() {
     alertShown = false;
   }
 
-  // Keep last 10 values
   if (labels.length > 10) {
     labels.shift();
     data.shift();
@@ -62,5 +60,4 @@ function generateData() {
   chart.update();
 }
 
-// Run every 2 seconds
 setInterval(generateData, 2000);
