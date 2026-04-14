@@ -1,5 +1,6 @@
 let data = [];
 let labels = [];
+let alertShown = false;
 
 const ctx = document.getElementById('chart').getContext('2d');
 
@@ -29,16 +30,27 @@ function generateData() {
   document.getElementById("temp").innerText = temp + " °C";
   document.getElementById("hum").innerText = humidity + " %";
 
-  // Update time
   document.getElementById("time").innerText =
     "Last updated: " + new Date().toLocaleTimeString();
 
-  // Alert feature
+  let alertBox = document.getElementById("alertBox");
+
+  // Alert logic (NO SPAM)
   if (temp > 32) {
-    alert("⚠️ High Temperature Warning!");
+    alertBox.innerText = "⚠️ High Temperature Warning!";
+    alertBox.className = "alert";
+
+    if (!alertShown) {
+      alert("⚠️ High Temperature Warning!");
+      alertShown = true;
+    }
+  } else {
+    alertBox.innerText = "✅ System Normal";
+    alertBox.className = "normal";
+    alertShown = false;
   }
 
-  // Maintain last 10 data points
+  // Keep last 10 values
   if (labels.length > 10) {
     labels.shift();
     data.shift();
